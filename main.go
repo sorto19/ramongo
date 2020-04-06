@@ -1,15 +1,22 @@
 package main
 
 import (
-	"net/http"
+	"fmt"
+	"ramongo/database"
 
-	"github.com/go-chi/chi"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
-	r := chi.NewRouter()
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("welcome"))
-	})
-	http.ListenAndServe(":3000", r)
+	databaseConnection := database.InitDB()
+	//logica
+	defer databaseConnection.Close()
+
+	fmt.Println(databaseConnection)
+
+	// r := chi.NewRouter()
+	// r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+	// 	w.Write([]byte("welcome"))
+	// })
+	// http.ListenAndServe(":3000", r)
 }
